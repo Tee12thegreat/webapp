@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Training Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+        }
+        .section-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0d6efd;
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-left: 3px solid #dee2e6;
+        }
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        #results {
+            display: none;
+            margin-top: 2rem;
+        }
+        .section-complete {
+            background-color: #e8f4f8;
+            border-color: #0d6efd;
+        }
+        #certificate {
+            display: none;
+        }
+        .certificate-container {
+            border: 2px solid #0d6efd;
+            padding: 2rem;
+            background-color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-nav {
+            margin-bottom: 2rem;
+        }
+        .section-nav .btn {
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1 class="text-center mb-4">Cybersecurity Training Quiz</h1>
+        
+        <div class="section-nav text-center">
+            <button class="btn btn-outline-primary section-btn" data-section="password">Password Security</button>
+            <button class="btn btn-outline-primary section-btn" data-section="data-protection">Data Protection</button>
+            <button class="btn btn-outline-primary section-btn" data-section="social-engineering">Social Engineering</button>
+        </div>
+        
+        <form id="quizForm">
+            <!-- Password Security Section -->
+            <div class="section" id="password-section">
+                <h2 class="section-title">Password Security</h2>
+                
+                <div class="question" id="q1">
+                    <h4>1. What is the minimum recommended length for a strong password?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q1" id="q1a" value="a" required>
+                        <label class="form-check-label" for="q1a">8 characters</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q1" id="q1b" value="b">
+                        <label class="form-check-label" for="q1b">12 characters</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q1" id="q1c" value="c">
+                        <label class="form-check-label" for="q1c">16 characters</label>
+                    </div>
+                    <div class="feedback" id="f1"></div>
+                </div>
+
+                <div class="question" id="q2">
+                    <h4>2. Which of these is the strongest password?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q2" id="q2a" value="a" required>
+                        <label class="form-check-label" for="q2a">Summer2023!</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q2" id="q2b" value="b">
+                        <label class="form-check-label" for="q2b">Blue42House#</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q2" id="q2c" value="c">
+                        <label class="form-check-label" for="q2c">Password123!</label>
+                    </div>
+                    <div class="feedback" id="f2"></div>
+                </div>
+
+                <div class="question" id="q3">
+                    <h4>3. What is the primary benefit of using a password manager?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q3" id="q3a" value="a" required>
+                        <label class="form-check-label" for="q3a">It allows you to use the same password everywhere</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q3" id="q3b" value="b">
+                        <label class="form-check-label" for="q3b">It generates and stores unique, complex passwords for each account</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q3" id="q3c" value="c">
+                        <label class="form-check-label" for="q3c">It remembers your passwords so you don't have to</label>
+                    </div>
+                    <div class="feedback" id="f3"></div>
+                </div>
+
+                <div class="question" id="q4">
+                    <h4>4. How often should you change your passwords?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q4" id="q4a" value="a" required>
+                        <label class="form-check-label" for="q4a">Every 30 days</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q4" id="q4b" value="b">
+                        <label class="form-check-label" for="q4b">Only when there's evidence of compromise</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q4" id="q4c" value="c">
+                        <label class="form-check-label" for="q4c">Every 6 months regardless of circumstances</label>
+                    </div>
+                    <div class="feedback" id="f4"></div>
+                </div>
+
+                <div class="question" id="q5">
+                    <h4>5. What is multi-factor authentication (MFA)?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q5" id="q5a" value="a" required>
+                        <label class="form-check-label" for="q5a">Using two different passwords</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q5" id="q5b" value="b">
+                        <label class="form-check-label" for="q5b">Verifying identity using two or more different methods</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q5" id="q5c" value="c">
+                        <label class="form-check-label" for="q5c">Having both a username and password</label>
+                    </div>
+                    <div class="feedback" id="f5"></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-primary check-section" data-section="password">Check Password Security Answers</button>
+                </div>
+            </div>
+
+            <!-- Data Protection Regulations Section -->
+            <div class="section" id="data-protection-section">
+                <h2 class="section-title">Data Protection Regulations</h2>
+                
+                <div class="question" id="q6">
+                    <h4>1. What is the primary purpose of GDPR?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q6" id="q6a" value="a" required>
+                        <label class="form-check-label" for="q6a">To protect personal data and privacy of EU citizens</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q6" id="q6b" value="b">
+                        <label class="form-check-label" for="q6b">To standardize cybersecurity across Europe</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q6" id="q6c" value="c">
+                        <label class="form-check-label" for="q6c">To regulate internet service providers</label>
+                    </div>
+                    <div class="feedback" id="f6"></div>
+                </div>
+
+                <div class="question" id="q7">
+                    <h4>2. What does PII stand for?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q7" id="q7a" value="a" required>
+                        <label class="form-check-label" for="q7a">Personal Internet Information</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q7" id="q7b" value="b">
+                        <label class="form-check-label" for="q7b">Personally Identifiable Information</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q7" id="q7c" value="c">
+                        <label class="form-check-label" for="q7c">Private Individual Identification</label>
+                    </div>
+                    <div class="feedback" id="f7"></div>
+                </div>
+
+                <div class="question" id="q8">
+                    <h4>3. What is the maximum fine for GDPR violations?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q8" id="q8a" value="a" required>
+                        <label class="form-check-label" for="q8a">€100,000 or 2% of annual revenue</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q8" id="q8b" value="b">
+                        <label class="form-check-label" for="q8b">€20 million or 4% of global annual turnover</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q8" id="q8c" value="c">
+                        <label class="form-check-label" for="q8c">There is no maximum fine</label>
+                    </div>
+                    <div class="feedback" id="f8"></div>
+                </div>
+
+                <div class="question" id="q9">
+                    <h4>4. Which of these is NOT a data subject right under GDPR?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q9" id="q9a" value="a" required>
+                        <label class="form-check-label" for="q9a">Right to be forgotten</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q9" id="q9b" value="b">
+                        <label class="form-check-label" for="q9b">Right to data portability</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q9" id="q9c" value="c">
+                        <label class="form-check-label" for="q9c">Right to sell personal data</label>
+                    </div>
+                    <div class="feedback" id="f9"></div>
+                </div>
+
+                <div class="question" id="q10">
+                    <h4>5. What is the principle of "data minimization"?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q10" id="q10a" value="a" required>
+                        <label class="form-check-label" for="q10a">Using the smallest possible storage devices</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q10" id="q10b" value="b">
+                        <label class="form-check-label" for="q10b">Collecting only the data you absolutely need</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q10" id="q10c" value="c">
+                        <label class="form-check-label" for="q10c">Reducing the size of data files through compression</label>
+                    </div>
+                    <div class="feedback" id="f10"></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-primary check-section" data-section="data-protection">Check Data Protection Answers</button>
+                </div>
+            </div>
+
+            <!-- Social Engineering Defense Section -->
+            <div class="section" id="social-engineering-section">
+                <h2 class="section-title">Social Engineering Defense</h2>
+                
+                <div class="question" id="q11">
+                    <h4>1. What is the most common form of social engineering attack?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q11" id="q11a" value="a" required>
+                        <label class="form-check-label" for="q11a">Phishing emails</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q11" id="q11b" value="b">
+                        <label class="form-check-label" for="q11b">Impersonating IT support</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q11" id="q11c" value="c">
+                        <label class="form-check-label" for="q11c">Tailgating into secure areas</label>
+                    </div>
+                    <div class="feedback" id="f11"></div>
+                </div>
+
+                <div class="question" id="q12">
+                    <h4>2. What should you do if you receive a phone call from someone claiming to be from IT asking for your password?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q12" id="q12a" value="a" required>
+                        <label class="form-check-label" for="q12a">Give them the information they need</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q12" id="q12b" value="b">
+                        <label class="form-check-label" for="q12b">Politely refuse and report the call to security</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q12" id="q12c" value="c">
+                        <label class="form-check-label" for="q12c">Ask them to verify their identity with personal questions</label>
+                    </div>
+                    <div class="feedback" id="f12"></div>
+                </div>
+
+                <div class="question" id="q13">
+                    <h4>3. What is "pretexting" in social engineering?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q13" id="q13a" value="a" required>
+                        <label class="form-check-label" for="q13a">Creating a fake scenario to gain trust and information</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q13" id="q13b" value="b">
+                        <label class="form-check-label" for="q13b">Adding false information to emails</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q13" id="q13c" value="c">
+                        <label class="form-check-label" for="q13c">Using technical jargon to confuse victims</label>
+                    </div>
+                    <div class="feedback" id="f13"></div>
+                </div>
+
+                <div class="question" id="q14">
+                    <h4>4. What is the best defense against social engineering attacks?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q14" id="q14a" value="a" required>
+                        <label class="form-check-label" for="q14a">Having strong antivirus software</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q14" id="q14b" value="b">
+                        <label class="form-check-label" for="q14b">Employee awareness and training</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q14" id="q14c" value="c">
+                        <label class="form-check-label" for="q14c">Using complex passwords</label>
+                    </div>
+                    <div class="feedback" id="f14"></div>
+                </div>
+
+                <div class="question" id="q15">
+                    <h4>5. What should you do if you find a USB drive in the office parking lot?</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q15" id="q15a" value="a" required>
+                        <label class="form-check-label" for="q15a">Plug it in to see what's on it</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q15" id="q15b" value="b">
+                        <label class="form-check-label" for="q15b">Give it to IT security without plugging it in</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q15" id="q15c" value="c">
+                        <label class="form-check-label" for="q15c">Take it to lost and found</label>
+                    </div>
+                    <div class="feedback" id="f15"></div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-primary check-section" data-section="social-engineering">Check Social Engineering Answers</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="results" class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>Training Results</h3>
+            </div>
+            <div class="card-body">
+                <div id="section-results">
+                    <h4>Section Completion Status</h4>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="password-status">
+                            Password Security
+                            <span class="badge bg-secondary rounded-pill">Not completed</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="data-protection-status">
+                            Data Protection Regulations
+                            <span class="badge bg-secondary rounded-pill">Not completed</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="social-engineering-status">
+                            Social Engineering Defense
+                            <span class="badge bg-secondary rounded-pill">Not completed</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div id="certificate" class="text-center">
+                    <div class="certificate-container">
+                        <h2>Certificate of Completion</h2>
+                        <p>This certifies that</p>
+                        <h3 id="userName">[Your Name]</h3>
+                        <p>has successfully completed all sections of the</p>
+                        <p><strong>Cybersecurity Awareness Training</strong></p>
+                        <p>on <span id="completionDate"></span></p>
+                        <div class="mt-4">
+                            <img src="https://via.placeholder.com/150" alt="Signature" class="img-fluid">
+                            <p>Security Training Administrator</p>
+                        </div>
+                    </div>
+                    <button id="downloadCertificate" class="btn btn-primary mt-3">Download Certificate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Correct answers
+        const answers = {
+            // Password Security
+            q1: "b", q2: "b", q3: "b", q4: "b", q5: "b",
+            // Data Protection
+            q6: "a", q7: "b", q8: "b", q9: "c", q10: "b",
+            // Social Engineering
+            q11: "a", q12: "b", q13: "a", q14: "b", q15: "b"
+        };
+
+        // Feedback for answers
+        const feedback = {
+            // Password Security
+            q1: {
+                a: "Incorrect. While 8 characters was once recommended, 12 is now the minimum for strong passwords.",
+                b: "Correct! 12 characters is the current minimum recommendation for strong passwords.",
+                c: "Incorrect. While 16 characters is excellent, the minimum recommendation is 12."
+            },
+            q2: {
+                a: "Incorrect. While better than simple passwords, it contains predictable elements (season + year).",
+                b: "Correct! This is a strong password with random words, numbers, and symbols.",
+                c: "Incorrect. This is a very weak password despite the exclamation mark."
+            },
+            q3: {
+                a: "Incorrect. Password managers help you avoid using the same password everywhere.",
+                b: "Correct! The primary benefit is generating and storing unique, complex passwords.",
+                c: "Incorrect. While it does remember passwords, the main security benefit is generating strong, unique ones."
+            },
+            q4: {
+                a: "Incorrect. Frequent mandatory changes lead to weaker passwords (e.g., Password1, Password2).",
+                b: "Correct! Current best practice is to change passwords only when compromise is suspected.",
+                c: "Incorrect. Scheduled changes without evidence of compromise aren't recommended anymore."
+            },
+            q5: {
+                a: "Incorrect. MFA requires different authentication methods, not just multiple passwords.",
+                b: "Correct! MFA uses two or more different authentication methods like passwords and codes.",
+                c: "Incorrect. A username and password alone don't constitute MFA."
+            },
+            
+            // Data Protection
+            q6: {
+                a: "Correct! GDPR primarily focuses on personal data protection and privacy rights.",
+                b: "Incorrect. While related, GDPR specifically addresses data protection, not general cybersecurity.",
+                c: "Incorrect. GDPR regulates data controllers and processors, not specifically ISPs."
+            },
+            q7: {
+                a: "Incorrect. PII stands for Personally Identifiable Information.",
+                b: "Correct! PII means Personally Identifiable Information.",
+                c: "Incorrect. The correct acronym expansion is Personally Identifiable Information."
+            },
+            q8: {
+                a: "Incorrect. The maximum fine is higher than this amount.",
+                b: "Correct! The maximum is €20 million or 4% of global annual turnover, whichever is higher.",
+                c: "Incorrect. There is a defined maximum fine under GDPR."
+            },
+            q9: {
+                a: "Incorrect. Right to be forgotten is a valid GDPR right.",
+                b: "Incorrect. Right to data portability is a valid GDPR right.",
+                c: "Correct! Individuals don't have the right to sell their personal data under GDPR."
+            },
+            q10: {
+                a: "Incorrect. Data minimization refers to the amount of data collected, not storage devices.",
+                b: "Correct! Data minimization means collecting only what you absolutely need.",
+                c: "Incorrect. While compression reduces file size, it's not what data minimization refers to."
+            },
+            
+            // Social Engineering
+            q11: {
+                a: "Correct! Phishing emails are by far the most common social engineering attack.",
+                b: "Incorrect. While this happens, it's much less common than phishing emails.",
+                c: "Incorrect. Physical breaches like tailgating are less common than digital methods."
+            },
+            q12: {
+                a: "Incorrect. Never give your password to anyone over the phone.",
+                b: "Correct! Always refuse such requests and report them to security.",
+                c: "Incorrect. You shouldn't engage with suspicious callers - just report them."
+            },
+            q13: {
+                a: "Correct! Pretexting involves creating a fabricated scenario to gain information.",
+                b: "Incorrect. This describes phishing or spoofing, not pretexting.",
+                c: "Incorrect. While jargon might be used, pretexting specifically involves fake scenarios."
+            },
+            q14: {
+                a: "Incorrect. Antivirus doesn't protect against human manipulation.",
+                b: "Correct! Awareness is the best defense as social engineering targets people, not systems.",
+                c: "Incorrect. While good practice, passwords don't prevent social engineering."
+            },
+            q15: {
+                a: "Incorrect. Never plug in found USB drives as they may contain malware.",
+                b: "Correct! Always give found drives to IT security without examining them yourself.",
+                c: "Incorrect. Found drives should go directly to IT security, not general lost and found."
+            }
+        };
+
+        // Track completed sections
+        const completedSections = {
+            password: false,
+            dataProtection: false,
+            socialEngineering: false
+        };
+
+        // Handle section navigation
+        document.querySelectorAll('.section-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                document.querySelectorAll('.section').forEach(sec => {
+                    sec.style.display = 'none';
+                });
+                document.getElementById(`${section}-section`).style.display = 'block';
+            });
+        });
+
+        // Show first section by default
+        document.getElementById('password-section').style.display = 'block';
+
+        // Handle section submission
+        document.querySelectorAll('.check-section').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.getAttribute('data-section');
+                let allCorrect = true;
+                let questionsAnswered = true;
+                
+                // Determine question range for this section
+                let startQ, endQ;
+                if (section === 'password') {
+                    startQ = 1; endQ = 5;
+                } else if (section === 'data-protection') {
+                    startQ = 6; endQ = 10;
+                } else if (section === 'social-engineering') {
+                    startQ = 11; endQ = 15;
+                }
+                
+                // Check each question in this section
+                for (let i = startQ; i <= endQ; i++) {
+                    const questionId = `q${i}`;
+                    const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+                    const feedbackDiv = document.getElementById(`f${i}`);
+                    
+                    if (!selectedOption) {
+                        questionsAnswered = false;
+                        alert(`Please answer question ${i - startQ + 1} in this section.`);
+                        break;
+                    }
+                    
+                    if (selectedOption.value !== answers[questionId]) {
+                        allCorrect = false;
+                        feedbackDiv.className = "feedback incorrect";
+                        feedbackDiv.textContent = feedback[questionId][selectedOption.value];
+                    } else {
+                        feedbackDiv.className = "feedback correct";
+                        feedbackDiv.textContent = feedback[questionId][selectedOption.value];
+                    }
+                    feedbackDiv.style.display = "block";
+                }
+                
+                if (!questionsAnswered) return;
+                
+                if (allCorrect) {
+                    // Mark section as complete
+                    completedSections[section === 'data-protection' ? 'dataProtection' : section] = true;
+                    document.getElementById(`${section}-section`).classList.add('section-complete');
+                    
+                    // Update status display
+                    const statusElement = document.getElementById(`${section}-status`);
+                    statusElement.querySelector('.badge').className = 'badge bg-success rounded-pill';
+                    statusElement.querySelector('.badge').textContent = 'Completed';
+                    
+                    // Show results if all sections are complete
+                    checkAllSectionsComplete();
+                } else {
+                    alert('Some answers are incorrect. Please review the feedback and try again.');
+                }
+            });
+        });
+        
+        function checkAllSectionsComplete() {
+            if (completedSections.password && completedSections.dataProtection && completedSections.socialEngineering) {
+                document.getElementById('results').style.display = 'block';
+                document.getElementById('certificate').style.display = 'block';
+                
+                const userName = prompt("Enter your name for the certificate:");
+                if (userName) {
+                    document.getElementById('userName').textContent = userName;
+                    const today = new Date();
+                    document.getElementById('completionDate').textContent = today.toLocaleDateString();
+                }
+                
+                // Scroll to results
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Download certificate
+        document.getElementById('downloadCertificate').addEventListener('click', function() {
+            if (!completedSections.password || !completedSections.dataProtection || !completedSections.socialEngineering) {
+                alert('Please complete all sections first.');
+                return;
+            }
+            
+            // In a real implementation, this would generate a PDF certificate
+            alert('Certificate download would start here. In a real implementation, this would generate a PDF.');
+        });
+    </script>
+</body>
+</html>

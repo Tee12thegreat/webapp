@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield Zimbabwe | Integrated Cybersecurity Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #154360;
+            --success-color: #28b463;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --info-color: #3498db;
+            --light-bg: #fff;
+            --sidebar-glass: rgba(26, 82, 118, 0.85);
+            --sidebar-blur: blur(8px);
+            --light-text: #212529;
+            --dark-text: #ecf0f1;
+            --light-card: #fff;
+            --card-shadow: 0 4px 24px rgba(26,82,118,0.08);
+            --light-border: #e5e7eb;
+            --zim-green: #008751;
+            --zim-yellow: #FFF200;
+            --zim-red: #CE1126;
+            --zim-black: #000000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
+            color: var(--light-text);
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        /* Sidebar with glassmorphism */
+        .sidebar {
+            background: var(--sidebar-glass);
+            color: white;
+            padding: 2rem 1rem 1rem 1rem;
+            position: relative;
+            box-shadow: 2px 0 16px rgba(26,82,118,0.07);
+            backdrop-filter: var(--sidebar-blur);
+            border-right: 1px solid #e5e7eb;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            color: var(--zim-yellow);
+            font-size: 1.7rem;
+            filter: drop-shadow(0 1px 2px #0002);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.2rem;
+            color: rgba(255, 255, 255, 0.92);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: background 0.18s, color 0.18s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.14);
+            color: #fff;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, var(--primary-color) 60%, var(--zim-green) 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(26,82,118,0.07);
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 1.08em;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2.5rem 2.5rem 2rem 2.5rem;
+            background: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.2rem;
+            padding-bottom: 1.1rem;
+            border-bottom: 1.5px solid var(--light-border);
+        }
+
+        .page-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .notification-badge {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -7px;
+            background: var(--danger-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 19px;
+            height: 19px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: 2px solid #fff;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 60%, var(--zim-green) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2.5px solid #fff;
+            box-shadow: 0 1px 6px rgba(26,82,118,0.09);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--light-card);
+            border-radius: 0.7rem;
+            box-shadow: var(--card-shadow);
+            padding: 1.7rem 1.5rem;
+            margin-bottom: 1.7rem;
+            border: 1px solid var(--light-border);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(26,82,118,0.13);
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.1rem;
+            padding-bottom: 0.7rem;
+            border-bottom: 1.2px solid var(--light-border);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.13rem;
+            color: var(--primary-color);
+        }
+
+        /* Grid Layout */
+        .grid-cols-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .grid-cols-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Status indicators */
+        .status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-success {
+            background: rgba(40, 180, 99, 0.13);
+            color: var(--success-color);
+        }
+        .status-warning {
+            background: rgba(243, 156, 18, 0.13);
+            color: var(--warning-color);
+        }
+        .status-danger {
+            background: rgba(231, 76, 60, 0.13);
+            color: var(--danger-color);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.55rem 1.15rem;
+            border-radius: 0.45rem;
+            font-weight: 500;
+            cursor: pointer;
+            gap: 0.5rem;
+            border: none;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            box-shadow: 0 1px 2px rgba(26,82,118,0.04);
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color) 60%, var(--zim-green) 100%);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #154360 60%, #008751 100%);
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #1a5276;
+        }
+        .btn-secondary:hover {
+            background: #e0e4ea;
+        }
+        .btn-sm {
+            padding: 0.28rem 0.65rem;
+            font-size: 0.92rem;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1.1rem 1.2rem;
+            border-radius: 0.45rem;
+            margin-bottom: 1.7rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            border-left: 5px solid transparent;
+            background: #fffbe6;
+            box-shadow: 0 1px 4px #f9e79f33;
+        }
+        .alert-warning {
+            border-left-color: var(--warning-color);
+        }
+        .alert-danger {
+            border-left-color: var(--danger-color);
+        }
+        .alert-icon {
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+            color: var(--warning-color);
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-border);
+        }
+        .table th {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .cve-badge {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        /* Zimbabwe theme elements */
+        .zim-theme {
+            background: linear-gradient(to right, 
+                var(--zim-green) 0%, var(--zim-green) 25%, 
+                var(--zim-yellow) 25%, var(--zim-yellow) 50%, 
+                var(--zim-red) 50%, var(--zim-red) 75%, 
+                var(--zim-black) 75%, var(--zim-black) 100%);
+            height: 4px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-radius: 2px;
+            box-shadow: 0 1px 4px #0001;
+        }
+
+        /* Forms */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--light-border);
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .form-check-input {
+            margin-right: 0.5rem;
+        }
+
+        /* Progress bars */
+        .progress {
+            background-color: #f3f4f6;
+            border-radius: 0.25rem;
+            height: 0.5rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        .progress-container {
+            margin-bottom: 1rem;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Training modules */
+        .training-module {
+            padding: 1rem;
+            border: 1px solid var(--light-border);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .module-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Checklist items */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-border);
+        }
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        .checklist-status {
+            margin-left: auto;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .editable-checklist {
+            cursor: pointer;
+        }
+        .editable-checklist:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100%;
+                z-index: 1000;
+            }
+            .sidebar.active {
+                display: block;
+            }
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 1.2rem;
+            }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-button {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+            .main-content {
+                padding-top: 4rem;
+            }
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+
+        /* Chart containers */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        /* Incident modal styling */
+        .incident-modal .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .incident-details {
+            margin-bottom: 1.5rem;
+        }
+        .incident-details h6 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .incident-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-button">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Sidebar with Zimbabwe theme -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-shield-alt logo-icon"></i>
+                <span class="logo-text">CyberSentinel</span>
+            </div>
+            <nav>
+                <ul style="list-style: none; padding: 0;">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt nav-icon"></i>
+                            <span>Monitoring Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="incident">
+                            <i class="fas fa-exclamation-triangle nav-icon"></i>
+                            <span>Incident Response</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="training">
+                            <i class="fas fa-graduation-cap nav-icon"></i>
+                            <span>Training Portal</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="reports">
+                            <i class="fas fa-file-alt nav-icon"></i>
+                            <span>Compliance Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="settings">
+                            <i class="fas fa-cog nav-icon"></i>
+                            <span>System Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="zim-theme"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1 class="page-title">CyberSentinel Watch Dashboard</h1>
+                <div class="user-menu">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar">ZW</div>
+                        <span>Security Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="section active">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle alert-icon"></i>
+                    <div>
+                        <strong>New CVE Alert:</strong> CVE-2023-32456 (CVSS 9.8) detected in your network - 
+                        Remote Code Execution vulnerability in Apache Log4j. 
+                        <a href="#" style="color: inherit; text-decoration: underline;">View mitigation steps</a>
+                    </div>
+                </div>
+
+                <div class="grid-cols-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Network Status</h3>
+                        </div>
+                        <div>
+                            <span class="status status-success">All systems operational</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Threats Detected</h3>
+                        </div>
+                        <div>
+                            <span class="status status-danger">2 High, 5 Medium</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Compliance</h3>
+                        </div>
+                        <div>
+                            <span class="status status-success">Compliant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Policy Implementation Checklist</h3>
+                        <i class="fas fa-info-circle" title="Ensure all security policies are properly implemented"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="checklist-item editable-checklist" data-checklist-id="employee-training">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <div>
+                                <strong>Employee Training</strong>
+                                <div class="text-muted small">All staff completed cybersecurity awareness training</div>
+                            </div>
+                            <span class="checklist-status">Completed: 92%</span>
+                        </div>
+                        <div class="checklist-item editable-checklist" data-checklist-id="system-patching">
+                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                            <div>
+                                <strong>System Patching</strong>
+                                <div class="text-muted small">3 critical updates pending installation</div>
+                            </div>
+                            <span class="checklist-status">Action Required</span>
+                        </div>
+                        <div class="checklist-item editable-checklist" data-checklist-id="mfa-implementation">
+                            <i class="fas fa-times-circle text-danger me-2"></i>
+                            <div>
+                                <strong>MFA Implementation</strong>
+                                <div class="text-muted small">Multi-factor authentication not enabled for all users</div>
+                            </div>
+                            <span class="checklist-status">Not Compliant</span>
+                        </div>
+                        <div class="checklist-item editable-checklist" data-checklist-id="data-backups">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <div>
+                                <strong>Data Backups</strong>
+                                <div class="text-muted small">Daily backups verified and encrypted</div>
+                            </div>
+                            <span class="checklist-status">Compliant</span>
+                        </div>
+                        <div class="checklist-item editable-checklist" data-checklist-id="incident-response-plan">
+                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                            <div>
+                                <strong>Incident Response Plan</strong>
+                                <div class="text-muted small">Last tested 3 months ago</div>
+                            </div>
+                            <span class="checklist-status">Needs Review</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Incident Reports</h3>
+                        <div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newIncidentModal">
+                                <i class="fas fa-plus"></i> New Report
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div style="overflow-x: auto;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Severity</th>
+                                        <th>Reported</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>INC-2023-042</td>
+                                        <td>Ransomware Attempt</td>
+                                        <td><span class="status status-danger">Active</span></td>
+                                        <td><span class="status status-danger">Critical</span></td>
+                                        <td>Today 08:15</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-042">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>INC-2023-041</td>
+                                        <td>Phishing Campaign</td>
+                                        <td><span class="status status-success">Resolved</span></td>
+                                        <td><span class="status status-warning">High</span></td>
+                                        <td>Yesterday 14:30</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-041">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>INC-2023-040</td>
+                                        <td>Data Exfiltration</td>
+                                        <td><span class="status status-warning">Investigating</span></td>
+                                        <td><span class="status status-warning">Medium</span></td>
+                                        <td>2 days ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-040">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Incident Response Section -->
+            <div id="incident-section" class="section">
+                <div class="grid-cols-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Report New Incident</h3>
+                            <i class="fas fa-question-circle" title="Report security incidents for immediate response"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="mb-3">
+                                <label class="form-label">Incident Type</label>
+                                <select class="form-select">
+                                    <option>Select incident type...</option>
+                                    <option>Malware Infection</option>
+                                    <option>Unauthorized Access</option>
+                                    <option>Data Breach</option>
+                                    <option>Phishing Attack</option>
+                                    <option>Denial of Service</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" rows="4" placeholder="Provide detailed information about the incident..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Severity</label>
+                                <select class="form-select">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option selected>High</option>
+                                    <option>Critical</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Affected Systems</label>
+                                <input type="text" class="form-control" placeholder="List affected systems or departments">
+                            </div>
+                            <button class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane"></i> Submit Incident Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Incidents</h3>
+                        <div>
+                            <button class="btn btn-sm btn-secondary">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div style="overflow-x: auto;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>CVE References</th>
+                                        <th>Reported</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>INC-2023-042</td>
+                                        <td>Ransomware Attempt</td>
+                                        <td><span class="status status-danger">Active</span></td>
+                                        <td>
+                                            <span class="cve-badge">CVE-2023-32456</span>
+                                            <span class="cve-badge">CVE-2023-28771</span>
+                                        </td>
+                                        <td>Today 08:15</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary me-1">
+                                                <i class="fas fa-tasks"></i> Manage
+                                            </button>
+                                            <button class="btn btn-sm btn-secondary">
+                                                <i class="fas fa-file-alt"></i> Report
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>INC-2023-041</td>
+                                        <td>Phishing Campaign</td>
+                                        <td><span class="status status-success">Resolved</span></td>
+                                        <td>-</td>
+                                        <td>Yesterday 14:30</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-secondary">
+                                                <i class="fas fa-file-alt"></i> Report
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>INC-2023-040</td>
+                                        <td>Data Exfiltration</td>
+                                        <td><span class="status status-warning">Investigating</span></td>
+                                        <td><span class="cve-badge">CVE-2023-12345</span></td>
+                                        <td>2 days ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary me-1">
+                                                <i class="fas fa-tasks"></i> Manage
+                                            </button>
+                                            <button class="btn btn-sm btn-secondary">
+                                                <i class="fas fa-file-alt"></i> Report
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Portal Section -->
+            <div id="training-section" class="section">
+                <div class="grid-cols-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Training Progress</h3>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Overall Completion</span>
+                                    <span>78%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container mt-3">
+                                <div class="progress-label">
+                                    <span>Phishing Awareness</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container mt-3">
+                                <div class="progress-label">
+                                    <span>Data Protection</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container mt-3">
+                                <div class="progress-label">
+                                    <span>Password Security</span>
+                                    <span>88%</span>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-info" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Latest Phishing Test Results</h3>
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="chart-container">
+                                <canvas id="phishingChart"></canvas>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <small class="text-muted">Last test conducted: Today 09:00</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Available Training Modules</h3>
+                        <span class="badge bg-primary">6 New Modules</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="grid-cols-2">
+                            <div class="training-module">
+                                <div class="module-title">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    Training Quiz
+                                </div>
+                                <p class="small">Press the Launch button to start. Each section has 15 Questions!</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="badge bg-success">Completed: 92%</span>
+                                    <a href="training-quiz.html?module=phishing" class="btn btn-sm btn-primary">Launch</a>
+                                </div>
+                            </div>
+                            <div class="training-module">
+                                <div class="module-title">
+                                    <i class="fas fa-lock me-2"></i>
+                                    Password Security
+                                </div>
+                                <p class="small">Best practices for creating and managing secure passwords.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="badge bg-success">Completed: 88%</span>
+                                   
+                                </div>
+                            </div>
+                            <div class="training-module">
+                                <div class="module-title">
+                                    <i class="fas fa-database me-2"></i>
+                                    Data Protection Regulations
+                                </div>
+                                <p class="small">Understanding Zimbabwe's data protection laws and compliance requirements.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="badge bg-warning">Completed: 65%</span>
+                                  
+                                </div>
+                            </div>
+                            <div class="training-module">
+                                <div class="module-title">
+                                    <i class="fas fa-user-shield me-2"></i>
+                                    Social Engineering Defense
+                                </div>
+                                <p class="small">Recognize and prevent social engineering attacks.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="badge bg-danger">Completed: 42%</span>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Reports Section -->
+            <div id="reports-section" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Compliance Reports</h3>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus"></i> Generate New Report
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="grid-cols-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Zimbabwe Data Protection Act</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Compliance status with Zimbabwe's data protection regulations.</p>
+                                    <div class="progress mt-2" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 85%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small class="text-muted">Last updated: 1 week ago</small>
+                                        <button class="btn btn-sm btn-secondary">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">PCI DSS Compliance</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Payment Card Industry Data Security Standards report.</p>
+                                    <div class="progress mt-2" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" style="width: 72%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small class="text-muted">Last updated: 2 weeks ago</small>
+                                        <button class="btn btn-sm btn-secondary">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">ISO 27001 Audit</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Information security management system audit report.</p>
+                                    <div class="progress mt-2" style="height: 8px;">
+                                        <div class="progress-bar bg-danger" style="width: 58%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small class="text-muted">Last updated: 1 month ago</small>
+                                        <button class="btn btn-sm btn-secondary">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Settings Section -->
+            <div id="settings-section" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">System Configuration</h3>
+                        <span class="status status-success">All systems operational</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="grid-cols-2">
+                            <div>
+                                <h4>Notification Settings</h4>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifyCritical" checked>
+                                    <label class="form-check-label" for="notifyCritical">Critical Alerts</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifyHigh" checked>
+                                    <label class="form-check-label" for="notifyHigh">High Severity Incidents</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifyMedium">
+                                    <label class="form-check-label" for="notifyMedium">Medium Severity Incidents</label>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Security Controls</h4>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="autoBlockMalware" checked>
+                                    <label class="form-check-label" for="autoBlockMalware">Automatically block malware</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="autoQuarantine" checked>
+                                    <label class="form-check-label" for="autoQuarantine">Automatically quarantine threats</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="cveMonitoring" checked>
+                                    <label class="form-check-label" for="cveMonitoring">CVE database monitoring</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                            <button class="btn btn-secondary ms-2">
+                                <i class="fas fa-undo"></i> Reset to Defaults
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Report Modal -->
+    <div class="modal fade incident-modal" id="incidentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="incidentModalTitle">Incident Report Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="incidentModalBody">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Export as PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Incident Report Modal -->
+    <div class="modal fade" id="newIncidentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Report New Incident</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Incident Type</label>
+                        <select class="form-select">
+                            <option>Select incident type...</option>
+                            <option>Malware Infection</option>
+                            <option>Unauthorized Access</option>
+                            <option>Data Breach</option>
+                            <option>Phishing Attack</option>
+                            <option>Denial of Service</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="4" placeholder="Provide detailed information about the incident..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Severity</label>
+                        <select class="form-select">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option selected>High</option>
+                            <option>Critical</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Affected Systems</label>
+                        <input type="text" class="form-control" placeholder="List affected systems or departments">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Submit Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Checklist Edit Modal -->
+    <div class="modal fade" id="checklistEditModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Checklist Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Item Title</label>
+                        <input type="text" class="form-control" id="checklistItemTitle">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="checklistItemDesc" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="checklistItemStatus">
+                            <option value="success">Completed</option>
+                            <option value="warning">Action Required</option>
+                            <option value="danger">Not Compliant</option>
+                            <option value="info">In Progress</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Completion Percentage</label>
+                        <input type="range" class="form-range" id="checklistCompletion" min="0" max="100" step="5">
+                        <div class="text-center">
+                            <span id="completionValue">50%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveChecklistChanges">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CVE Details Modal -->
+    <div class="modal fade" id="cveModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cveModalTitle">CVE Mitigation Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cveModalBody">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userRole = localStorage.getItem('userRole');
+
+    if (!userRole) {
+        // Redirect to login if no role is set
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Navigation handling
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Update active states
+            navLinks.forEach(item => item.classList.remove('active'));
+            sections.forEach(section => section.classList.remove('active'));
+            
+            this.classList.add('active');
+            const sectionId = this.getAttribute('data-section') + '-section';
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+
+    // Show or hide sections based on user role
+    if (userRole === 'auditor') {
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') !== 'incident' && link.getAttribute('data-section') !== 'training') {
+                link.style.display = 'none'; // Hide other links
+            }
+        });
+    }
+});
+            // Mobile menu toggle
+            document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+
+            // Navigation handling
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.sidebar').classList.remove('active');
+                    }
+                    
+                    // Update active states
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    
+                    const sectionId = this.getAttribute('data-section') + '-section';
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+
+            // Create charts
+            createPhishingChart();
+            
+            // Incident database
+            const incidentDatabase = {
+                "inc-042": {
+                    id: "INC-2023-042",
+                    type: "Ransomware Attempt",
+                    status: "Active",
+                    severity: "Critical",
+                    description: "Detected ransomware attempting to encrypt files on multiple endpoints. The ransomware appears to be a variant of LockBit 3.0.",
+                    affectedSystems: "Finance Department Workstations (5 systems), File Server FS-01",
+                    reportedBy: "Security Admin",
+                    reportedTime: "Today 08:15",
+                    actionTaken: "Isolated affected systems, initiated backup verification, notified incident response team",
+                    cves: ["CVE-2023-32456", "CVE-2023-28771"]
+                },
+                "inc-041": {
+                    id: "INC-2023-041",
+                    type: "Phishing Campaign",
+                    status: "Resolved",
+                    severity: "High",
+                    description: "Targeted phishing campaign against HR department with fake job applicant resumes containing malicious macros.",
+                    affectedSystems: "Email Gateway, HR Department Workstations",
+                    reportedBy: "HR Manager",
+                    reportedTime: "Yesterday 14:30",
+                    actionTaken: "Blocked sender domains, removed emails from mailboxes, conducted user awareness training",
+                    cves: []
+                },
+                "inc-040": {
+                    id: "INC-2023-040",
+                    type: "Data Exfiltration",
+                    status: "Investigating",
+                    severity: "Medium",
+                    description: "Suspicious data transfer activity detected from marketing database to external IP address.",
+                    affectedSystems: "Marketing Database Server, VPN Gateway",
+                    reportedBy: "System Monitoring",
+                    reportedTime: "2 days ago",
+                    actionTaken: "Blocked suspicious IP, reset credentials, initiated forensic analysis",
+                    cves: ["CVE-2023-12345"]
+                }
+            };
+            
+            // CVE database
+            const cveDatabase = {
+                "CVE-2023-32456": {
+                    title: "Apache Log4j Remote Code Execution",
+                    description: "A critical vulnerability in Apache Log4j allowing remote code execution.",
+                    severity: "Critical (CVSS 9.8)",
+                    affected: "Log4j versions 2.0-beta9 to 2.14.1",
+                    mitigation: [
+                        "Immediately update to Log4j version 2.15.0 or later",
+                        "Apply vendor-supplied patches",
+                        "Implement network segmentation to limit exposure",
+                        "Monitor for suspicious activity",
+                        "Consider using log4j2.formatMsgNoLookups=true as a temporary mitigation"
+                    ],
+                    references: [
+                        "https://nvd.nist.gov/vuln/detail/CVE-2023-32456",
+                        "https://logging.apache.org/log4j/2.x/security.html"
+                    ]
+                },
+                "CVE-2023-28771": {
+                    title: "Ransomware Vulnerability",
+                    description: "Vulnerability allowing ransomware to propagate through network shares.",
+                    severity: "High (CVSS 8.5)",
+                    affected: "Windows systems with SMBv1 enabled",
+                    mitigation: [
+                        "Disable SMBv1 protocol",
+                        "Ensure all systems are patched with latest updates",
+                        "Implement strict access controls on network shares",
+                        "Enable Windows Defender Attack Surface Reduction rules",
+                        "Educate users about phishing risks"
+                    ],
+                    references: [
+                        "https://nvd.nist.gov/vuln/detail/CVE-2023-28771",
+                        "https://support.microsoft.com/en-us/topic/ms08-067-vulnerability-in-server-service-could-allow-remote-code-execution-8e7c7c9c-8b9d-4f9f-9f9f-9f9f9f9f9f9f"
+                    ]
+                },
+                "CVE-2023-12345": {
+                    title: "Unauthorized Access Vulnerability",
+                    description: "Vulnerability allowing unauthorized access to sensitive data.",
+                    severity: "Medium (CVSS 6.5)",
+                    affected: "Multiple systems with weak authentication",
+                    mitigation: [
+                        "Implement multi-factor authentication",
+                        "Enforce strong password policies",
+                        "Regularly review and update access controls",
+                        "Monitor for unusual access patterns",
+                        "Conduct regular security audits"
+                    ],
+                    references: [
+                        "https://nvd.nist.gov/vuln/detail/CVE-2023-12345"
+                    ]
+                }
+            };
+            
+            // Show incident details in modal
+            document.querySelectorAll('.view-incident').forEach(button => {
+                button.addEventListener('click', function() {
+                    const incidentId = this.getAttribute('data-incident-id');
+                    const incident = incidentDatabase[incidentId];
+                    
+                    if (!incident) return;
+                    
+                    const modalTitle = document.getElementById('incidentModalTitle');
+                    const modalBody = document.getElementById('incidentModalBody');
+                    
+                    modalTitle.textContent = `${incident.id}: ${incident.type}`;
+                    
+                    let html = `
+                        <div class="incident-details">
+                            <h6>Description</h6>
+                            <p>${incident.description}</p>
+                        </div>
+                        <div class="incident-details">
+                            <h6>Status</h6>
+                            <p><span class="status ${incident.status === 'Active' ? 'status-danger' : incident.status === 'Resolved' ? 'status-success' : 'status-warning'}">${incident.status}</span></p>
+                        </div>
+                        <div class="incident-details">
+                            <h6>Severity</h6>
+                            <p><span class="status ${incident.severity === 'Critical' ? 'status-danger' : incident.severity === 'High' ? 'status-warning' : 'status-info'}">${incident.severity}</span></p>
+                        </div>
+                        <div class="incident-details">
+                            <h6>Affected Systems</h6>
+                            <p>${incident.affectedSystems}</p>
+                        </div>
+                        <div class="incident-details">
+                            <h6>Reported By</h6>
+                            <p>${incident.reportedBy} at ${incident.reportedTime}</p>
+                        </div>
+                        <div class="incident-details">
+                            <h6>Action Taken</h6>
+                            <p>${incident.actionTaken}</p>
+                        </div>
+                    `;
+                    
+                    if (incident.cves.length > 0) {
+                        html += `
+                            <div class="incident-details">
+                                <h6>Related CVEs</h6>
+                                <div class="d-flex flex-wrap">
+                        `;
+                        
+                        incident.cves.forEach(cve => {
+                            html += `<span class="cve-badge me-2 mb-2">${cve}</span>`;
+                        });
+                        
+                        html += `
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    modalBody.innerHTML = html;
+                    
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('incidentModal'));
+                    modal.show();
+                });
+            });
+            
+            // Show CVE details in modal
+            document.querySelectorAll('.btn-secondary').forEach(button => {
+                if (button.textContent.includes('Investigate')) {
+                    button.addEventListener('click', function() {
+                        const row = this.closest('tr');
+                        const cveBadges = row.querySelectorAll('.cve-badge');
+                        
+                        if (cveBadges.length > 0) {
+                            const cveId = cveBadges[0].textContent;
+                            showCveDetails(cveId);
+                        }
+                    });
+                }
+            });
+            
+            function showCveDetails(cveId) {
+                const cveData = cveDatabase[cveId];
+                if (!cveData) return;
+
+                const modalTitle = document.getElementById('cveModalTitle');
+                const modalBody = document.getElementById('cveModalBody');
+                
+                modalTitle.textContent = `${cveId}: ${cveData.title}`;
+                
+                let html = `
+                    <div class="mb-3">
+                        <h6>Description</h6>
+                        <p>${cveData.description}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Severity</h6>
+                        <p><span class="badge bg-danger">${cveData.severity}</span></p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Affected Systems</h6>
+                        <p>${cveData.affected}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Recommended Mitigation Steps</h6>
+                        <ol>
+                `;
+                
+                cveData.mitigation.forEach(step => {
+                    html += `<li>${step}</li>`;
+                });
+                
+                html += `
+                        </ol>
+                    </div>
+                    <div class="mb-3">
+                        <h6>References</h6>
+                        <ul>
+                `;
+                
+                cveData.references.forEach(ref => {
+                    html += `<li><a href="${ref}" target="_blank">${ref}</a></li>`;
+                });
+                
+                html += `
+                        </ul>
+                    </div>
+                `;
+                
+                modalBody.innerHTML = html;
+                
+                // Show the modal
+                const modal = new bootstrap.Modal(document.getElementById('cveModal'));
+                modal.show();
+            }
+            
+            // Policy checklist editing
+            document.querySelectorAll('.editable-checklist').forEach(item => {
+                item.addEventListener('click', function() {
+                    const checklistId = this.getAttribute('data-checklist-id');
+                    const title = this.querySelector('strong').textContent;
+                    const description = this.querySelector('.text-muted').textContent;
+                    const statusIcon = this.querySelector('i');
+                    const statusText = this.querySelector('.checklist-status').textContent;
+                    
+                    // Determine current status
+                    let currentStatus = 'warning';
+                    if (statusIcon.classList.contains('fa-check-circle')) {
+                        currentStatus = 'success';
+                    } else if (statusIcon.classList.contains('fa-times-circle')) {
+                        currentStatus = 'danger';
+                    } else if (statusIcon.classList.contains('fa-exclamation-triangle')) {
+                        currentStatus = 'warning';
+                    }
+                    
+                    // Get completion percentage if available
+                    let completion = 0;
+                    const completionMatch = statusText.match(/(\d+)%/);
+                    if (completionMatch) {
+                        completion = parseInt(completionMatch[1]);
+                    }
+                    
+                    // Populate modal
+                    document.getElementById('checklistItemTitle').value = title;
+                    document.getElementById('checklistItemDesc').value = description;
+                    document.getElementById('checklistItemStatus').value = currentStatus;
+                    document.getElementById('checklistCompletion').value = completion;
+                    document.getElementById('completionValue').textContent = `${completion}%`;
+                    
+                    // Store checklist item reference
+                    document.getElementById('saveChecklistChanges').setAttribute('data-checklist-id', checklistId);
+                    document.getElementById('saveChecklistChanges').setAttribute('data-checklist-element', this);
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('checklistEditModal'));
+                    modal.show();
+                });
+            });
+            
+            // Update completion percentage display
+            document.getElementById('checklistCompletion').addEventListener('input', function() {
+                document.getElementById('completionValue').textContent = `${this.value}%`;
+            });
+            
+            // Save checklist changes
+            document.getElementById('saveChecklistChanges').addEventListener('click', function() {
+                const checklistId = this.getAttribute('data-checklist-id');
+                const checklistElement = this.getAttribute('data-checklist-element');
+                const newTitle = document.getElementById('checklistItemTitle').value;
+                const newDesc = document.getElementById('checklistItemDesc').value;
+                const newStatus = document.getElementById('checklistItemStatus').value;
+                const newCompletion = document.getElementById('checklistCompletion').value;
+                
+                // Update the checklist item
+                const element = document.querySelector(`[data-checklist-id="${checklistId}"]`);
+                if (element) {
+                    // Update title and description
+                    element.querySelector('strong').textContent = newTitle;
+                    element.querySelector('.text-muted').textContent = newDesc;
+                    
+                    // Update status icon
+                    const icon = element.querySelector('i');
+                    icon.className = 'fas me-2'; // Reset classes
+                    
+                    if (newStatus === 'success') {
+                        icon.classList.add('fa-check-circle', 'text-success');
+                        element.querySelector('.checklist-status').textContent = `Completed: ${newCompletion}%`;
+                    } else if (newStatus === 'warning') {
+                        icon.classList.add('fa-exclamation-triangle', 'text-warning');
+                        element.querySelector('.checklist-status').textContent = 'Action Required';
+                    } else if (newStatus === 'danger') {
+                        icon.classList.add('fa-times-circle', 'text-danger');
+                        element.querySelector('.checklist-status').textContent = 'Not Compliant';
+                    } else {
+                        icon.classList.add('fa-info-circle', 'text-info');
+                        element.querySelector('.checklist-status').textContent = `In Progress: ${newCompletion}%`;
+                    }
+                }
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('checklistEditModal'));
+                modal.hide();
+            });
+            
+            // PDF download functionality
+            document.querySelectorAll('.download-pdf').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pdfName = this.getAttribute('data-pdf');
+                    alert(`In a real application, this would download the PDF: ${pdfName}`);
+                    // In a real app, you would trigger a download here
+                    
+                });
+            });
+        
+
+        function createPhishingChart() {
+            const ctx = document.getElementById('phishingChart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Finance', 'HR', 'IT', 'Operations', 'Sales', 'Management'],
+                    datasets: [{
+                        label: 'Click Rate (%)',
+                        data: [8, 12, 5, 15, 18, 7],
+                        backgroundColor: '#3498db'
+                    }, {
+                        label: 'Report Rate (%)',
+                        data: [92, 88, 95, 85, 82, 93],
+                        backgroundColor: '#2ecc71'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

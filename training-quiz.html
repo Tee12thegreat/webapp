@@ -69,6 +69,27 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+        .training-material {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+        }
+        .material-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .download-btn {
+            margin-top: 0.5rem;
+        }
+        .completion-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -76,11 +97,42 @@
         <h1 class="text-center mb-4">Cybersecurity Training Quiz</h1>
         
         <div class="section-nav text-center">
+            <button class="btn btn-outline-primary section-btn" data-section="training">Training Materials</button>
             <button class="btn btn-outline-primary section-btn" data-section="password">Password Security</button>
             <button class="btn btn-outline-primary section-btn" data-section="data-protection">Data Protection</button>
             <button class="btn btn-outline-primary section-btn" data-section="social-engineering">Social Engineering</button>
         </div>
         
+        <!-- Training Materials Section -->
+        <div class="section" id="training-section">
+            <h2 class="section-title">Training Materials</h2>
+            <p>Please review these training materials before attempting the quizzes.</p>
+            
+            <div class="training-material">
+                <div class="material-title">Password Security Best Practices</div>
+                <p>A comprehensive guide to creating and managing secure passwords.</p>
+                <a href="password-security-guide.pdf" class="btn btn-primary download-btn" download>Download PDF</a>
+            </div>
+            
+            <div class="training-material">
+                <div class="material-title">Data Protection Regulations Overview</div>
+                <p>Understanding GDPR and other data protection requirements.</p>
+                <a href="data-protection-guide.pdf" class="btn btn-primary download-btn" download>Download PDF</a>
+            </div>
+            
+            <div class="training-material">
+                <div class="material-title">Social Engineering Awareness</div>
+                <p>How to recognize and prevent social engineering attacks.</p>
+                <a href="social-engineering-guide.pdf" class="btn btn-primary download-btn" download>Download PDF</a>
+            </div>
+            
+            <div class="training-material">
+                <div class="material-title">Cybersecurity Quick Reference</div>
+                <p>A handy cheat sheet with key security tips.</p>
+                <a href="cybersecurity-cheatsheet.pdf" class="btn btn-primary download-btn" download>Download PDF</a>
+            </div>
+        </div>
+
         <form id="quizForm">
             <!-- Password Security Section -->
             <div class="section" id="password-section">
@@ -173,6 +225,9 @@
 
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-primary check-section" data-section="password">Check Password Security Answers</button>
+                </div>
+                <div class="completion-message" id="password-complete" style="display: none;">
+                    Congratulations! You've completed the Password Security section. You can now proceed to the next section.
                 </div>
             </div>
 
@@ -268,6 +323,9 @@
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-primary check-section" data-section="data-protection">Check Data Protection Answers</button>
                 </div>
+                <div class="completion-message" id="data-protection-complete" style="display: none;">
+                    Congratulations! You've completed the Data Protection section. You can now proceed to the next section.
+                </div>
             </div>
 
             <!-- Social Engineering Defense Section -->
@@ -362,6 +420,9 @@
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-primary check-section" data-section="social-engineering">Check Social Engineering Answers</button>
                 </div>
+                <div class="completion-message" id="social-engineering-complete" style="display: none;">
+                    Congratulations! You've completed the Social Engineering section. You can now view your results.
+                </div>
             </div>
         </form>
 
@@ -401,7 +462,11 @@
                             <p>Security Training Administrator</p>
                         </div>
                     </div>
-                    <button id="downloadCertificate" class="btn btn-primary mt-3">Download Certificate</button>
+                    <div class="mt-4">
+                        <h4>Congratulations on completing all sections!</h4>
+                        <p>Click the button below to download your certificate.</p>
+                        <a id="downloadCertificate" class="btn btn-success btn-lg" href="#" download="Certificate.pdf">Download Your Certificate</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -522,7 +587,7 @@
         });
 
         // Show first section by default
-        document.getElementById('password-section').style.display = 'block';
+        document.getElementById('training-section').style.display = 'block';
 
         // Handle section submission
         document.querySelectorAll('.check-section').forEach(btn => {
@@ -576,6 +641,9 @@
                     statusElement.querySelector('.badge').className = 'badge bg-success rounded-pill';
                     statusElement.querySelector('.badge').textContent = 'Completed';
                     
+                    // Show completion message
+                    document.getElementById(`${section}-complete`).style.display = 'block';
+                    
                     // Show results if all sections are complete
                     checkAllSectionsComplete();
                 } else {
@@ -594,6 +662,9 @@
                     document.getElementById('userName').textContent = userName;
                     const today = new Date();
                     document.getElementById('completionDate').textContent = today.toLocaleDateString();
+                    
+                    // Generate certificate PDF download
+                    generateCertificate(userName, today);
                 }
                 
                 // Scroll to results
@@ -601,16 +672,17 @@
             }
         }
         
-        // Download certificate
-        document.getElementById('downloadCertificate').addEventListener('click', function() {
-            if (!completedSections.password || !completedSections.dataProtection || !completedSections.socialEngineering) {
-                alert('Please complete all sections first.');
-                return;
-            }
+        function generateCertificate(name, date) {
+            // In a real implementation, you would generate a PDF here
+            // For this example, we'll just enable the download button
             
-            // In a real implementation, this would generate a PDF certificate
-            alert('Certificate download would start here. In a real implementation, this would generate a PDF.');
-        });
+            const downloadBtn = document.getElementById('downloadCertificate');
+            downloadBtn.addEventListener('click', function() {
+                alert("In a real implementation, this would download your certificate PDF.");
+                // This would typically call a server-side script to generate a PDF
+                // For example: window.location.href = 'generate_certificate.php?name=' + encodeURIComponent(name);
+            });
+        }
     </script>
 </body>
 </html>

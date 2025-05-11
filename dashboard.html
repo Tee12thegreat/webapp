@@ -515,6 +515,42 @@
             gap: 0.5rem;
             margin-top: 1rem;
         }
+        .checklist-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--light-border);
+    display: flex;
+    align-items: flex-start;
+}
+
+.checklist-item:last-child {
+    border-bottom: none;
+}
+
+.checklist-item .form-check {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.checklist-item .form-check-label {
+    width: 100%;
+    cursor: pointer;
+    padding-left: 0.5rem;
+}
+
+.checklist-item .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.2em;
+    cursor: pointer;
+}
+
+.checklist-item .form-check-input:checked + .form-check-label {
+    opacity: 0.7;
+}
+
+.checklist-item .form-check-input:checked + .form-check-label strong {
+    text-decoration: line-through;
+}
     </style>
 </head>
 <body>
@@ -621,54 +657,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Policy Implementation Checklist</h3>
-                        <i class="fas fa-info-circle" title="Ensure all security policies are properly implemented"></i>
-                    </div>
-                    <div class="card-content">
-                        <div class="checklist-item editable-checklist" data-checklist-id="employee-training">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <div>
+               <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Policy Implementation Checklist</h3>
+                    <i class="fas fa-info-circle" title="Ensure all security policies are properly implemented"></i>
+                </div>
+                <div class="card-content">
+                    <div class="checklist-item" data-checklist-id="employee-training">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-employee-training">
+                            <label class="form-check-label" for="check-employee-training">
                                 <strong>Employee Training</strong>
                                 <div class="text-muted small">All staff completed cybersecurity awareness training</div>
-                            </div>
-                            <span class="checklist-status">Completed: 92%</span>
+                            </label>
                         </div>
-                        <div class="checklist-item editable-checklist" data-checklist-id="system-patching">
-                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                            <div>
+                    </div>
+                    <div class="checklist-item" data-checklist-id="system-patching">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-system-patching">
+                            <label class="form-check-label" for="check-system-patching">
                                 <strong>System Patching</strong>
                                 <div class="text-muted small">3 critical updates pending installation</div>
-                            </div>
-                            <span class="checklist-status">Action Required</span>
+                            </label>
                         </div>
-                        <div class="checklist-item editable-checklist" data-checklist-id="mfa-implementation">
-                            <i class="fas fa-times-circle text-danger me-2"></i>
-                            <div>
+                    </div>
+                    <div class="checklist-item" data-checklist-id="mfa-implementation">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-mfa-implementation">
+                            <label class="form-check-label" for="check-mfa-implementation">
                                 <strong>MFA Implementation</strong>
                                 <div class="text-muted small">Multi-factor authentication not enabled for all users</div>
-                            </div>
-                            <span class="checklist-status">Not Compliant</span>
+                            </label>
                         </div>
-                        <div class="checklist-item editable-checklist" data-checklist-id="data-backups">
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                            <div>
+                    </div>
+                    <div class="checklist-item" data-checklist-id="data-backups">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-data-backups" checked>
+                            <label class="form-check-label" for="check-data-backups">
                                 <strong>Data Backups</strong>
                                 <div class="text-muted small">Daily backups verified and encrypted</div>
-                            </div>
-                            <span class="checklist-status">Compliant</span>
+                            </label>
                         </div>
-                        <div class="checklist-item editable-checklist" data-checklist-id="incident-response-plan">
-                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                            <div>
+                    </div>
+                    <div class="checklist-item" data-checklist-id="incident-response-plan">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-incident-response-plan">
+                            <label class="form-check-label" for="check-incident-response-plan">
                                 <strong>Incident Response Plan</strong>
                                 <div class="text-muted small">Last tested 3 months ago</div>
-                            </div>
-                            <span class="checklist-status">Needs Review</span>
+                            </label>
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="card">
                     <div class="card-header">
@@ -687,7 +728,7 @@
                                         <th>ID</th>
                                         <th>Type</th>
                                         <th>Status</th>
-                                        <th>Severity</th>
+                                        
                                         <th>Reported</th>
                                         <th>Actions</th>
                                     </tr>
@@ -697,7 +738,7 @@
                                         <td>INC-2023-042</td>
                                         <td>Ransomware Attempt</td>
                                         <td><span class="status status-danger">Active</span></td>
-                                        <td><span class="status status-danger">Critical</span></td>
+                                        
                                         <td>Today 08:15</td>
                                         <td>
                                             <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-042">
@@ -709,7 +750,7 @@
                                         <td>INC-2023-041</td>
                                         <td>Phishing Campaign</td>
                                         <td><span class="status status-success">Resolved</span></td>
-                                        <td><span class="status status-warning">High</span></td>
+                                       
                                         <td>Yesterday 14:30</td>
                                         <td>
                                             <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-041">
@@ -721,7 +762,7 @@
                                         <td>INC-2023-040</td>
                                         <td>Data Exfiltration</td>
                                         <td><span class="status status-warning">Investigating</span></td>
-                                        <td><span class="status status-warning">Medium</span></td>
+                                        
                                         <td>2 days ago</td>
                                         <td>
                                             <button class="btn btn-sm btn-primary view-incident" data-incident-id="inc-040">
@@ -763,9 +804,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Severity</label>
                                 <select class="form-select">
-                                    <option>Low</option>
+                                    <option selected>Low</option>
                                     <option>Medium</option>
-                                    <option selected>High</option>
+                                    <option>High</option>
                                     <option>Critical</option>
                                 </select>
                             </div>
@@ -978,76 +1019,75 @@
             </div>
 
             <!-- Compliance Reports Section -->
-            <div id="reports-section" class="section">
-                <div class="card">
+           <!-- Compliance Reports Section -->
+<div id="reports-section" class="section">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Compliance Reports</h3>
+            <button id="generateReportBtn" class="btn btn-sm btn-primary">
+                <i class="fas fa-plus"></i> Generate New Report
+            </button>
+        </div>
+        <div class="card-content">
+            <div class="grid-cols-3">
+                <!-- Card 1 -->
+                <div class="card compliance-report-card">
                     <div class="card-header">
-                        <h3 class="card-title">Compliance Reports</h3>
-                        <button id="generateReportBtn" class="btn btn-sm btn-primary">
-                            <i class="fas fa-plus"></i> Generate New Report
-                        </button>
+                        <h3 class="card-title">Zimbabwe Data Protection Act</h3>
                     </div>
                     <div class="card-content">
-                        <div class="grid-cols-3">
-                            <!-- Card 1 -->
-                            <div class="card compliance-report-card" data-pdf="zimbabwe-data-protection-act.pdf" tabindex="0" style="cursor:pointer;">
-                                <div class="card-header">
-                                    <h3 class="card-title">Zimbabwe Data Protection Act</h3>
-                                </div>
-                                <div class="card-content">
-                                    <p>Compliance status with Zimbabwe's data protection regulations.</p>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-success" style="width: 85%"></div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <small class="text-muted">Last updated: 1 week ago</small>
-                                        <button class="btn btn-sm btn-secondary download-btn" data-pdf="zimbabwe-data-protection-act.pdf" tabindex="-1">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card 2 -->
-                            <div class="card compliance-report-card" data-pdf="pci-dss-compliance.pdf" tabindex="0" style="cursor:pointer;">
-                                <div class="card-header">
-                                    <h3 class="card-title">PCI DSS Compliance</h3>
-                                </div>
-                                <div class="card-content">
-                                    <p>Payment Card Industry Data Security Standards report.</p>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-warning" style="width: 72%"></div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <small class="text-muted">Last updated: 2 weeks ago</small>
-                                        <button class="btn btn-sm btn-secondary download-btn" data-pdf="pci-dss-compliance.pdf" tabindex="-1">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card 3 -->
-                            <div class="card compliance-report-card" data-pdf="iso-27001-audit.pdf" tabindex="0" style="cursor:pointer;">
-                                <div class="card-header">
-                                    <h3 class="card-title">ISO 27001 Audit</h3>
-                                </div>
-                                <div class="card-content">
-                                    <p>Information security management system audit report.</p>
-                                    <div class="progress mt-2" style="height: 8px;">
-                                        <div class="progress-bar bg-danger" style="width: 58%"></div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <small class="text-muted">Last updated: 1 month ago</small>
-                                        <button class="btn btn-sm btn-secondary download-btn" data-pdf="iso-27001-audit.pdf" tabindex="-1">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <p>Compliance status with <a href="zimbabwedata.pdf" target="_blank" class="text-primary">Zimbabwe's Data Protection Regulations</a>.</p>
+                        <div class="progress mt-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 85%"></div>
                         </div>
-                        <!-- Hidden anchor for downloads -->
-                        <a id="hiddenDownloadLink" style="display:none;"></a>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">Last updated: 1 week ago</small>
+                            <a href="zimbabwedata.pdf" class="btn btn-sm btn-secondary" download>
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="card compliance-report-card">
+                    <div class="card-header">
+                        <h3 class="card-title">PCI DSS Compliance</h3>
+                    </div>
+                    <div class="card-content">
+                        <p><a href="compliance.pdf" target="_blank" class="text-primary">Payment Card Industry Data Security Standards</a> report.</p>
+                        <div class="progress mt-2" style="height: 8px;">
+                            <div class="progress-bar bg-warning" style="width: 72%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">Last updated: 2 weeks ago</small>
+                            <a href="compliance.pdf" class="btn btn-sm btn-secondary" download>
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="card compliance-report-card">
+                    <div class="card-header">
+                        <h3 class="card-title">ISO 27001 Audit</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>Information security management system audit report based on <a href="audit.pdf" target="_blank" class="text-primary">ISO 27001 standards</a>.</p>
+                        <div class="progress mt-2" style="height: 8px;">
+                            <div class="progress-bar bg-danger" style="width: 58%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">Last updated: 1 month ago</small>
+                            <a href="audit.pdf" class="btn btn-sm btn-secondary" download>
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
             <!-- System Settings Section -->
             <div id="settings-section" class="section">
@@ -1309,7 +1349,6 @@
                     id: "INC-2023-042",
                     type: "Ransomware Attempt",
                     status: "Active",
-                    severity: "Critical",
                     description: "Detected ransomware attempting to encrypt files on multiple endpoints. The ransomware appears to be a variant of LockBit 3.0.",
                     affectedSystems: "Finance Department Workstations (5 systems), File Server FS-01",
                     reportedBy: "Security Admin",
@@ -1321,7 +1360,6 @@
                     id: "INC-2023-041",
                     type: "Phishing Campaign",
                     status: "Resolved",
-                    severity: "High",
                     description: "Targeted phishing campaign against HR department with fake job applicant resumes containing malicious macros.",
                     affectedSystems: "Email Gateway, HR Department Workstations",
                     reportedBy: "HR Manager",
@@ -1333,7 +1371,7 @@
                     id: "INC-2023-040",
                     type: "Data Exfiltration",
                     status: "Investigating",
-                    severity: "Medium",
+
                     description: "Suspicious data transfer activity detected from marketing database to external IP address.",
                     affectedSystems: "Marketing Database Server, VPN Gateway",
                     reportedBy: "System Monitoring",
@@ -1668,101 +1706,28 @@
                 modal.show();
             }
             
-            // Policy checklist editing
-             // Policy checklist editing
-    const checklistItems = document.querySelectorAll('.editable-checklist');
-    const checklistEditModal = new bootstrap.Modal(document.getElementById('checklistEditModal'));
-    const checklistItemTitle = document.getElementById('checklistItemTitle');
-    const checklistItemDesc = document.getElementById('checklistItemDesc');
-    const checklistItemStatus = document.getElementById('checklistItemStatus');
-    const checklistCompletion = document.getElementById('checklistCompletion');
-    const completionValue = document.getElementById('completionValue');
-    const saveChecklistChanges = document.getElementById('saveChecklistChanges');
-
-    checklistItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const checklistId = this.getAttribute('data-checklist-id');
-            const title = this.querySelector('strong').textContent;
-            const description = this.querySelector('.text-muted').textContent;
-            const statusIcon = this.querySelector('i');
-            const statusText = this.querySelector('.checklist-status').textContent;
-            
-            // Determine current status
-            let currentStatus = 'warning';
-            if (statusIcon.classList.contains('fa-check-circle')) {
-                currentStatus = 'success';
-            } else if (statusIcon.classList.contains('fa-times-circle')) {
-                currentStatus = 'danger';
-            } else if (statusIcon.classList.contains('fa-exclamation-triangle')) {
-                currentStatus = 'warning';
-            }
-            
-            // Get completion percentage if available
-            let completion = 0;
-            const completionMatch = statusText.match(/(\d+)%/);
-            if (completionMatch) {
-                completion = parseInt(completionMatch[1]);
-            }
-            
-            // Populate modal
-            checklistItemTitle.value = title;
-            checklistItemDesc.value = description;
-            checklistItemStatus.value = currentStatus;
-            checklistCompletion.value = completion;
-            completionValue.textContent = `${completion}%`;
-            
-            // Store checklist item reference
-            saveChecklistChanges.setAttribute('data-checklist-id', checklistId);
-            saveChecklistChanges.setAttribute('data-checklist-element', this);
-            
-            // Show modal
-            checklistEditModal.show();
-        });
-    });
+        // Policy checklist editing
+// Policy checklist editing
+          // Initialize checkboxes based on localStorage if available
+document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+    const checklistId = checkbox.closest('.checklist-item').getAttribute('data-checklist-id');
+    const savedState = localStorage.getItem(`checklist-${checklistId}`);
     
-    // Update completion percentage display
-    checklistCompletion.addEventListener('input', function() {
-        completionValue.textContent = `${this.value}%`;
-    });
+    if (savedState === 'checked') {
+        checkbox.checked = true;
+    } else if (savedState === 'unchecked') {
+        checkbox.checked = false;
+    }
     
-    // Save checklist changes
-    saveChecklistChanges.addEventListener('click', function() {
-        const checklistId = this.getAttribute('data-checklist-id');
-        const checklistElement = document.querySelector(`[data-checklist-id="${checklistId}"]`);
-        const newTitle = checklistItemTitle.value;
-        const newDesc = checklistItemDesc.value;
-        const newStatus = checklistItemStatus.value;
-        const newCompletion = checklistCompletion.value;
+    // Add event listener to save state when changed
+    checkbox.addEventListener('change', function() {
+        const checklistId = this.closest('.checklist-item').getAttribute('data-checklist-id');
+        localStorage.setItem(`checklist-${checklistId}`, this.checked ? 'checked' : 'unchecked');
         
-        // Update the checklist item
-        if (checklistElement) {
-            // Update title and description
-            checklistElement.querySelector('strong').textContent = newTitle;
-            checklistElement.querySelector('.text-muted').textContent = newDesc;
-            
-            // Update status icon and text
-            const icon = checklistElement.querySelector('i');
-            const statusText = checklistElement.querySelector('.checklist-status');
-            icon.className = 'fas me-2'; // Reset classes
-            
-            if (newStatus === 'success') {
-                icon.classList.add('fa-check-circle', 'text-success');
-                statusText.textContent = `Completed: ${newCompletion}%`;
-            } else if (newStatus === 'warning') {
-                icon.classList.add('fa-exclamation-triangle', 'text-warning');
-                statusText.textContent = 'Action Required';
-            } else if (newStatus === 'danger') {
-                icon.classList.add('fa-times-circle', 'text-danger');
-                statusText.textContent = 'Not Compliant';
-            } else {
-                icon.classList.add('fa-info-circle', 'text-info');
-                statusText.textContent = `In Progress: ${newCompletion}%`;
-            }
-        }
-        
-        // Close modal
-        checklistEditModal.hide();
+        // You can add additional logic here if needed when a checkbox is toggled
+        console.log(`Checklist item ${checklistId} is now ${this.checked ? 'checked' : 'unchecked'}`);
     });
+});
             
             // Update completion percentage display
             document.getElementById('checklistCompletion').addEventListener('input', function() {
